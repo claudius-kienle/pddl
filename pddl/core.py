@@ -137,6 +137,12 @@ class Domain:
         """Get the actions."""
         return self._actions
 
+    def get_action(self, action_name: str) -> "Action":
+        for action in self.actions:
+            if action.name == action_name:
+                return action
+        raise ValueError("action %s not found" % action_name)
+
     @property
     def types(self) -> Dict[name_type, Optional[name_type]]:
         """Get the type definitions, if defined. Else, raise error."""

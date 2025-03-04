@@ -69,7 +69,7 @@ class BinaryOp(Formula):
 
     def __eq__(self, other):
         """Compare with another object."""
-        return isinstance(other, type(self)) and self.operands == other.operands
+        return isinstance(other, type(self)) and set(self.operands) == set(other.operands)
 
     def __hash__(self) -> int:
         """Compute the hash of the object."""
