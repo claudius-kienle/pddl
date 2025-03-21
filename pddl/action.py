@@ -14,9 +14,10 @@
 from typing import Optional, Sequence
 
 from pddl.custom_types import namelike, parse_name
+from pddl.exceptions import PDDLError
 from pddl.helpers.base import _typed_parameters, ensure_sequence
 from pddl.logic import Variable
-from pddl.logic.base import Formula
+from pddl.logic.base import Formula, And, Or
 from pddl.logic.terms import Term
 
 
@@ -40,6 +41,15 @@ class Action:
         """
         self._name: str = parse_name(name)
         self._parameters: Sequence[Variable] = ensure_sequence(parameters)
+        if isinstance(precondition, And):
+            pass # supported
+        elif isinstance(precondition, Or):
+            if len(precondition.operands) == 0:
+                raise PDDLError("`:precondition (or)` or `:precondition ()` is not supported. Fix %s" % name)
+            pass
+        elif precondition is None:
+            raise PDDLError("`:precondition (or)` or `:precondition ()` is not supported. Fix %s" % name)
+
         self._precondition = precondition
         self._effect = effect
 

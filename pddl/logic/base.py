@@ -139,6 +139,10 @@ class And(BinaryOp, metaclass=BinaryOpMetaclass):
     idempotency = True
     SYMBOL = "and"
 
+    def __str__(self) -> str:
+        """Get the string representation."""
+        return f"({self.SYMBOL} {' '.join(sorted(map(str, self.operands)))})"
+
 
 class Or(BinaryOp, metaclass=BinaryOpMetaclass):
     """Or operator."""
